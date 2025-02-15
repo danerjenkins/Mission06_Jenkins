@@ -4,6 +4,7 @@ namespace JoelMovieCollection.Models
 {
     public class Movie
     {
+        //set the properties of an individual movie
         [Key]
         [Required]
         public int MovieID { get; set; }
