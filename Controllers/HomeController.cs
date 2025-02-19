@@ -1,6 +1,7 @@
 using System.Diagnostics;
 using JoelMovieCollection.Models;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 
 namespace JoelMovieCollection.Controllers
 {
@@ -25,7 +26,16 @@ namespace JoelMovieCollection.Controllers
         }
         public IActionResult AddMovie()
         {
+            ViewBag.Categories = _context.Categories;
             return View();
+        }
+        public IActionResult ViewMovies()
+        {
+            var x = _context.Movies
+                .Include(x => x.Category)
+                .OrderBy(x => x.Title)
+                .ToList();
+            return View(x);
         }
 
         [HttpPost]
@@ -37,5 +47,7 @@ namespace JoelMovieCollection.Controllers
             _context.SaveChanges();
             return View("Confirmation", movie);
         }
+
+        
     }
 }
